@@ -1,6 +1,22 @@
 'use strict';
 
-const fs = require('fs');
+const mongoose = require('mongoose');
+const Author = require('../models/author')
+const Post = require('../models/post')
+
+mongoose.connect('mongodb://127.0.0.1:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
+
+var db = mongoose.connection; 
+db.on('error', console.error.bind(console, 'Erreur lors de la connexion')); 
+db.once('open', function (){
+ console.log("Connexion à la base OK"); 
+});
+
+db.Author = Author
+db.Post = Post
+module.exports = db;
+
+/*const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
@@ -37,4 +53,6 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+module.exports = db;*/
+
+
